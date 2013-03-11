@@ -4,7 +4,7 @@ A Go wrapper for the C based ENet UDP network library.
 
 ## Install
 
-    go get github/boj/goenet
+    go get github.com/boj/goenet
 
 ## Documentation
 
