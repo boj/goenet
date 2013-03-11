@@ -8,7 +8,7 @@ A Go wrapper for the C based ENet UDP network library.
 
 ## Documentation
 
-Located at [http://godoc.org/github.com/boj/goenet](GoDocs).
+Located at [GoDocs](http://godoc.org/github.com/boj/goenet).
 
 ## Existing Caveats
 
