@@ -6,6 +6,10 @@ A Go wrapper for the C based ENet UDP network library.
 
     go get github/boj/goenet
 
+## Documentation
+
+Located at [http://godoc.org/github.com/boj/goenet](GoDocs).
+
 ## Existing Caveats
 
 Currently when using _NewPacket_ to build a packet, the data parameter is required to be of type __[]byte__.  Data is also returned as such.
