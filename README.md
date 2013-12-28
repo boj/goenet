@@ -23,6 +23,15 @@ The _peer->data_ interface is strictly a stub until I can figure out how to easi
 * Benchmarks.
 * Testing where applicable.
 
+## Acknowledgements
+
+[ENet](http://enet.bespin.org/) - MIT license.
+
 ## Author
 
 Brian 'bojo' Jones mojobojo@gmail.com
+
+## License
+
+http://boj.mit-license.org/
+

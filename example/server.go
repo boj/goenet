@@ -5,7 +5,15 @@ import (
 	"log"
 )
 
+type Player struct {
+	Name string
+}
+
 func main() {
+	player := &Player{
+		Name: "Player1",
+	}
+
 	if goenet.Initialize() == 0 {
 		defer goenet.Deinitialize()
 
@@ -27,13 +35,17 @@ func main() {
 			for server.Service(event, 1000) > 0 {
 				switch event.EventType() {
 				case goenet.ENET_EVENT_TYPE_CONNECT:
-					log.Printf("Client connected\n")
+					peer := event.Peer()
+					peer.SetData(player)
+					log.Printf("Client connected: %d\n", peer.ConnectID())
 					break
 				case goenet.ENET_EVENT_TYPE_RECEIVE:
+					peer := event.Peer()
+					player := peer.Data().(*Player)
 					length := event.Packet().DataLength()
 					packetData := string(event.Packet().Data())
 					channel := event.ChannelID()
-					log.Printf("packet - length: %d, data: %s, channel: %d\n", length, packetData, channel)
+					log.Printf("packet - length: %d, data: %s, channel: %d, name: %s\n", length, packetData, channel, player.Name)
 					event.Packet().Destroy() // clean up
 					break
 				case goenet.ENET_EVENT_TYPE_DISCONNECT:

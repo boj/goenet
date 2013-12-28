@@ -39,9 +39,11 @@ func main() {
 			panic("Failed to connect to server")
 		}
 
-		data := []byte("Hello")
-		packet := goenet.NewPacket(data, len(data), goenet.ENET_PACKET_FLAG_RELIABLE)
-		peer.Send(0, packet)
+		for i := 0; i < 10; i++ {
+			data := []byte("Hello")
+			packet := goenet.NewPacket(data, len(data), goenet.ENET_PACKET_FLAG_RELIABLE)
+			peer.Send(0, packet)
+		}
 
 		for {
 			for client.Service(event, 1000) > 0 {
