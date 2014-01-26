@@ -28,10 +28,10 @@ func (p *ENetPacket) DataLength() int {
 	return int(p.dataLength)
 }
 
-func (packet *ENetPacket) Destroy() {
-	C.enet_packet_destroy((*C.ENetPacket)(packet))
+func (p *ENetPacket) Destroy() {
+	C.enet_packet_destroy((*C.ENetPacket)(p))
 }
 
-func (packet *ENetPacket) Resize(dataLength int) int {
-	return int(C.enet_packet_resize((*C.ENetPacket)(packet), C.size_t(dataLength)))
+func (p *ENetPacket) Resize(dataLength int) int {
+	return int(C.enet_packet_resize((*C.ENetPacket)(p), C.size_t(dataLength)))
 }

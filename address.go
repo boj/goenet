@@ -14,28 +14,28 @@ import (
 
 type ENetAddress C.ENetAddress
 
-func (address *ENetAddress) SetHost(host uint) {
-	address.host = C.enet_uint32(host)
+func (a *ENetAddress) SetHost(h uint) {
+	a.host = C.enet_uint32(h)
 }
 
-func (address *ENetAddress) SetPort(port uint) {
-	address.port = C.enet_uint16(port)
+func (a *ENetAddress) SetPort(port uint) {
+	a.port = C.enet_uint16(port)
 }
 
-func (address *ENetAddress) SetHostName(hostName string) int {
+func (a *ENetAddress) SetHostName(hostName string) int {
 	hName := C.CString(hostName)
 	defer C.free(unsafe.Pointer(hName))
-	return int(C.enet_address_set_host((*C.ENetAddress)(address), hName))
+	return int(C.enet_address_set_host((*C.ENetAddress)(a), hName))
 }
 
-func (address *ENetAddress) HostIp(hostName string, nameLength int) int {
+func (a *ENetAddress) HostIp(hostName string, nameLength int) int {
 	hName := C.CString(hostName)
 	defer C.free(unsafe.Pointer(hName))
-	return int(C.enet_address_get_host_ip((*C.ENetAddress)(address), hName, C.size_t(nameLength)))
+	return int(C.enet_address_get_host_ip((*C.ENetAddress)(a), hName, C.size_t(nameLength)))
 }
 
-func (address *ENetAddress) Host(hostName string, nameLength int) int {
+func (a *ENetAddress) Host(hostName string, nameLength int) int {
 	hName := C.CString(hostName)
 	defer C.free(unsafe.Pointer(hName))
-	return int(C.enet_address_get_host((*C.ENetAddress)(address), hName, C.size_t(nameLength)))
+	return int(C.enet_address_get_host((*C.ENetAddress)(a), hName, C.size_t(nameLength)))
 }

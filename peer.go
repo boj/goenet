@@ -21,63 +21,63 @@ type ENetPeer C.ENetPeer
 
 // Private
 
-func (peer *ENetPeer) ConnectID() int {
-	return int(peer.connectID)
+func (p *ENetPeer) ConnectID() int {
+	return int(p.connectID)
 }
 
 // SetData can set a reference to any arbitrary Go data.
-func (peer *ENetPeer) SetData(data interface{}) {
+func (p *ENetPeer) SetData(data interface{}) {
 	pd := &PeerData{
 		Value: data,
 	}
-	peer.data = unsafe.Pointer(pd)
+	p.data = unsafe.Pointer(pd)
 }
 
 // Data returns referenced Go data.  Must be dereferenced as a pointer.
 //
 //   peer.Data().(*MyType)
-func (peer *ENetPeer) Data() interface{} {
-	return reflect.NewAt(reflect.TypeOf(PeerData{}), peer.data).Elem().Interface().(PeerData).Value
+func (p *ENetPeer) Data() interface{} {
+	return reflect.NewAt(reflect.TypeOf(PeerData{}), p.data).Elem().Interface().(PeerData).Value
 }
 
 // Public
 
-func (peer *ENetPeer) Send(channelID int, packet *ENetPacket) int {
-	return int(C.enet_peer_send((*C.ENetPeer)(peer), C.enet_uint8(channelID), (*C.ENetPacket)(packet)))
+func (p *ENetPeer) Send(channelID int, packet *ENetPacket) int {
+	return int(C.enet_peer_send((*C.ENetPeer)(p), C.enet_uint8(channelID), (*C.ENetPacket)(packet)))
 }
 
-func (peer *ENetPeer) Receive(channelID *C.enet_uint8) *ENetPacket {
-	return (*ENetPacket)(C.enet_peer_receive((*C.ENetPeer)(peer), channelID))
+func (p *ENetPeer) Receive(channelID *C.enet_uint8) *ENetPacket {
+	return (*ENetPacket)(C.enet_peer_receive((*C.ENetPeer)(p), channelID))
 }
 
-func (peer *ENetPeer) Ping() {
-	C.enet_peer_ping((*C.ENetPeer)(peer))
+func (p *ENetPeer) Ping() {
+	C.enet_peer_ping((*C.ENetPeer)(p))
 }
 
-func (peer *ENetPeer) PingInterval(pingInterval int) {
-	C.enet_peer_ping_interval((*C.ENetPeer)(peer), C.enet_uint32(pingInterval))
+func (p *ENetPeer) PingInterval(pingInterval int) {
+	C.enet_peer_ping_interval((*C.ENetPeer)(p), C.enet_uint32(pingInterval))
 }
 
-func (peer *ENetPeer) Timeout(timeoutLimit, timeoutMinimum, timeoutMaximum int) {
-	C.enet_peer_timeout((*C.ENetPeer)(peer), C.enet_uint32(timeoutLimit), C.enet_uint32(timeoutMinimum), C.enet_uint32(timeoutMaximum))
+func (p *ENetPeer) Timeout(timeoutLimit, timeoutMinimum, timeoutMaximum int) {
+	C.enet_peer_timeout((*C.ENetPeer)(p), C.enet_uint32(timeoutLimit), C.enet_uint32(timeoutMinimum), C.enet_uint32(timeoutMaximum))
 }
 
-func (peer *ENetPeer) Reset() {
-	C.enet_peer_reset((*C.ENetPeer)(peer))
+func (p *ENetPeer) Reset() {
+	C.enet_peer_reset((*C.ENetPeer)(p))
 }
 
-func (peer *ENetPeer) Disconnect(data int) {
-	C.enet_peer_disconnect((*C.ENetPeer)(peer), C.enet_uint32(data))
+func (p *ENetPeer) Disconnect(data int) {
+	C.enet_peer_disconnect((*C.ENetPeer)(p), C.enet_uint32(data))
 }
 
-func (peer *ENetPeer) DisconnectNow(data int) {
-	C.enet_peer_disconnect_now((*C.ENetPeer)(peer), C.enet_uint32(data))
+func (p *ENetPeer) DisconnectNow(data int) {
+	C.enet_peer_disconnect_now((*C.ENetPeer)(p), C.enet_uint32(data))
 }
 
-func (peer *ENetPeer) DisconnectLater(data int) {
-	C.enet_peer_disconnect_later((*C.ENetPeer)(peer), C.enet_uint32(data))
+func (p *ENetPeer) DisconnectLater(data int) {
+	C.enet_peer_disconnect_later((*C.ENetPeer)(p), C.enet_uint32(data))
 }
 
-func (peer *ENetPeer) ThrottleConfigure(interval, acceleration, deceleration int) {
-	C.enet_peer_throttle_configure((*C.ENetPeer)(peer), C.enet_uint32(interval), C.enet_uint32(acceleration), C.enet_uint32(deceleration))
+func (p *ENetPeer) ThrottleConfigure(interval, acceleration, deceleration int) {
+	C.enet_peer_throttle_configure((*C.ENetPeer)(p), C.enet_uint32(interval), C.enet_uint32(acceleration), C.enet_uint32(deceleration))
 }
