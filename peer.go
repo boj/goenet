@@ -9,13 +9,8 @@ package goenet
 import "C"
 
 import (
-	"reflect"
 	"unsafe"
 )
-
-type PeerData struct {
-	Value interface{}
-}
 
 type ENetPeer C.ENetPeer
 
@@ -27,17 +22,14 @@ func (p *ENetPeer) ConnectID() int {
 
 // SetData can set a reference to any arbitrary Go data.
 func (p *ENetPeer) SetData(data interface{}) {
-	pd := &PeerData{
-		Value: data,
-	}
-	p.data = unsafe.Pointer(pd)
+	p.data = unsafe.Pointer(&data)
 }
 
 // Data returns referenced Go data.  Must be dereferenced as a pointer.
 //
 //   peer.Data().(*MyType)
 func (p *ENetPeer) Data() interface{} {
-	return reflect.NewAt(reflect.TypeOf(PeerData{}), p.data).Elem().Interface().(PeerData).Value
+	return unsafe.Pointer(p.data)
 }
 
 // Public
