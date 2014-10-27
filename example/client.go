@@ -1,7 +1,7 @@
 package main
 
 import (
-	"goenet"
+	"github.com/boj/goenet"
 	"log"
 )
 
