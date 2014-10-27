@@ -1,7 +1,7 @@
 package main
 
 import (
-	"goenet"
+	"github.com/boj/goenet"
 	"log"
 )
 
@@ -36,16 +36,18 @@ func main() {
 				switch event.EventType() {
 				case goenet.ENET_EVENT_TYPE_CONNECT:
 					peer := event.Peer()
+					log.Println(player)
 					peer.SetData(player)
 					log.Printf("Client connected: %d\n", peer.ConnectID())
 					break
 				case goenet.ENET_EVENT_TYPE_RECEIVE:
 					peer := event.Peer()
-					player := peer.Data().(*Player)
+					// player := peer.Data().(*Player)
 					length := event.Packet().DataLength()
 					packetData := string(event.Packet().Data())
 					channel := event.ChannelID()
-					log.Printf("packet - length: %d, data: %s, channel: %d, name: %s\n", length, packetData, channel, player.Name)
+					log.Printf("packet - length: %d, data: %s, channel: %d", length, packetData, channel)
+					peer.Send(channel, goenet.NewPacket([]byte(packetData), length, goenet.ENET_PACKET_FLAG_RELIABLE))
 					event.Packet().Destroy() // clean up
 					break
 				case goenet.ENET_EVENT_TYPE_DISCONNECT:
